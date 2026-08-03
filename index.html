@@ -13,17 +13,18 @@ header{position:sticky;top:0;z-index:5;background:rgba(248,243,237,.96);border-b
 nav a{color:var(--ink);text-decoration:none;margin:0 10px;font-size:14px}.cart{border:1px solid var(--ink);padding:10px 14px;background:transparent;cursor:pointer}
 .hero{max-width:1200px;margin:auto;padding:70px 24px;display:grid;grid-template-columns:1.05fr .95fr;gap:35px;align-items:center}
 .hero h1{font:clamp(44px,7vw,82px) Georgia,serif;line-height:.95;margin:12px 0}.eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:12px;color:var(--muted)}
-.hero p{font-size:17px;line-height:1.7;color:var(--muted);max-width:520px}.btn{display:inline-block;background:var(--ink);color:white;padding:14px 22px;text-decoration:none;border:0;cursor:pointer}
+.hero p{font-size:17px;line-height:1.7;color:var(--muted);max-width:520px}.btn{display:inline-block;background:var(--ink);color:white;padding:14px 22px;text-decoration:none;border:0;cursor:pointer}.btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--ink)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
 .hero-img{height:520px;border-radius:4px;background:linear-gradient(145deg,#d8c8bc,#b6a59a);display:flex;align-items:end;padding:30px;color:white;font-family:Georgia,serif;font-size:30px}
 section{max-width:1200px;margin:auto;padding:65px 24px}.section-title{text-align:center;font:42px Georgia,serif;margin:0 0 35px}
 .categories,.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.cat{padding:55px 20px;background:white;text-align:center;border:1px solid #eadfd7}.cat b{font:23px Georgia,serif}.cat span{display:block;color:var(--muted);font-size:12px;margin-top:8px}
 .product{background:white}.product-img{height:300px;background:linear-gradient(145deg,#d8c9be,#eee5dd);display:flex;align-items:end;padding:15px;color:white;font-size:12px;text-transform:uppercase;letter-spacing:2px}.product-body{padding:18px}.product h3{font:20px Georgia,serif;margin:0 0 7px}.price{font-weight:bold}.muted{color:var(--muted);font-size:13px}.product button{width:100%;margin-top:14px}
 .promo{background:var(--ink);color:white;text-align:center;padding:55px 24px}.promo h2{font:42px Georgia,serif;margin:0 0 12px}.promo p{color:#ddd}
 footer{background:#171515;color:white;padding:45px 24px}.footer-inner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;gap:30px}.footer-inner p{color:#bbb}
-.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.panel{background:white;max-width:560px;width:100%;padding:28px;border-radius:6px;max-height:90vh;overflow:auto}.panel h2{font:30px Georgia,serif}.row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee}.close{float:right;border:0;background:none;font-size:24px;cursor:pointer}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.panel{background:white;max-width:560px;width:100%;padding:28px;border-radius:6px;max-height:90vh;overflow:auto}.panel h2{font:30px Georgia,serif}.row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee}.row.small{align-items:center}.row:last-child{border-bottom:0}.close{float:right;border:0;background:none;font-size:24px;cursor:pointer}.qty{display:flex;align-items:center;gap:8px}.qty button{width:auto;padding:6px 10px;border:1px solid #ddd;background:#fff;cursor:pointer}
 .admin-link{position:fixed;bottom:16px;right:16px;background:#fff;border:1px solid #222;padding:10px 13px;text-decoration:none;color:#222;font-size:12px}
 @media(max-width:800px){nav{display:none}.hero{grid-template-columns:1fr;padding-top:40px}.hero-img{height:360px}.categories,.products{grid-template-columns:repeat(2,1fr)}.footer-inner{display:block}}
-@media(max-width:480px){.categories,.products{grid-template-columns:1fr}.section-title{font-size:34px}}
+@media(max-width:480px){.categories,.products{grid-template-columns:1fr}.section-title{font-size:34px}.hero-actions{display:grid}.btn{display:block;text-align:center}}
 </style>
 </head>
 <body>
@@ -32,7 +33,7 @@ footer{background:#171515;color:white;padding:45px 24px}.footer-inner{max-width:
 <button class="cart" onclick="openCart()">Cart (<span id="count">0</span>)</button></div></header>
 
 <main id="home">
-<div class="hero"><div><div class="eyebrow">🇵🇰 Collection Pakistanaise • 🇫🇷 Pour la France • Octobre</div><h1>Élégance pakistanaise, pour chaque occasion.</h1><p>Découvrez nos élégantes tenues et robes pakistanaises pour femmes. Commandez en ligne, prix en euros (€), avec paiement à la livraison.</p><a class="btn" href="#shop">Découvrir la collection</a></div><div class="hero-img">RAYÉRA</div></div>
+<div class="hero"><div><div class="eyebrow">🇵🇰 Collection Pakistanaise • 🇫🇷 Pour la France • Octobre</div><h1>Élégance pakistanaise, pour chaque occasion.</h1><p>Découvrez nos élégantes tenues et robes pakistanaises pour femmes. Commandez en ligne, prix en euros (€), avec paiement à la livraison.</p><div class="hero-actions"><a class="btn" href="#shop">Découvrir la collection</a><button class="btn secondary" type="button" onclick="openCart()">Voir le panier</button></div></div><div class="hero-img">RAYÉRA</div></div>
 
 <section><h2 class="section-title">🇵🇰 Collection Pakistanaise</h2><div class="categories">
 <div class="cat"><b>👗 Shalwar Kameez</b><span>Tenues traditionnelles élégantes</span></div><div class="cat"><b>✨ Maxi Dresses</b><span>Élégance moderne</span></div><div class="cat"><b>🌸 Party Wear</b><span>Pour vos occasions spéciales</span></div><div class="cat"><b>💎 Formal Wear</b><span>Collection premium</span></div>
@@ -54,18 +55,130 @@ footer{background:#171515;color:white;padding:45px 24px}.footer-inner{max-width:
 <div class="modal" id="cartModal"><div class="panel"><button class="close" onclick="closeCart()">×</button><h2>Your Cart</h2><div id="cartItems"></div><div class="row"><b>Total</b><b id="total">€0.00</b></div><button class="btn" style="width:100%;margin-top:18px" onclick="checkout()">Checkout — Cash on Delivery</button></div></div>
 
 <script>
-const products=[
-{name:"🇵🇰 Elegant Shalwar Kameez",price:59.99,tag:"NOUVEAU"},
-{name:"🇵🇰 Autumn Maxi Suit",price:49.99,tag:"NOUVEAU"},
-{name:"🇵🇰 Classic Party Dress",price:69.99,tag:"BEST-SELLER"},
-{name:"🇵🇰 Premium Formal Dress",price:89.99,tag:"PREMIUM"}
+const STORAGE_KEYS = { products: 'rayera_products', cart: 'rayera_cart' };
+const defaultProducts = [
+{name:'🇵🇰 Elegant Shalwar Kameez',price:59.99,tag:'NOUVEAU'},
+{name:'🇵🇰 Autumn Maxi Suit',price:49.99,tag:'NOUVEAU'},
+{name:'🇵🇰 Classic Party Dress',price:69.99,tag:'BEST-SELLER'},
+{name:'🇵🇰 Premium Formal Dress',price:89.99,tag:'PREMIUM'}
 ];
-let cart=[];
-function render(){document.getElementById("productGrid").innerHTML=products.map((p,i)=>`<div class="product"><div class="product-img">${p.tag}</div><div class="product-body"><h3>${p.name}</h3><div class="price">€${p.price.toFixed(2)}</div><div class="muted">Sizes: S • M • L • XL</div><button class="btn" onclick="add(${i})">Add to Cart</button></div></div>`).join("")}
-function add(i){cart.push(products[i]);document.getElementById("count").textContent=cart.length;openCart()}
-function openCart(){document.getElementById("cartModal").classList.add("open");let t=cart.reduce((s,p)=>s+p.price,0);document.getElementById("cartItems").innerHTML=cart.length?cart.map(p=>`<div class="row"><span>${p.name}</span><b>€${p.price.toFixed(2)}</b></div>`).join(""):"<p>Your cart is empty.</p>";document.getElementById("total").textContent="€"+t.toFixed(2)}
-function closeCart(){document.getElementById("cartModal").classList.remove("open")}
-function checkout(){if(!cart.length){alert("Your cart is empty.");return} alert("COD checkout demo: customer details and order confirmation would be submitted here.");}
+const readStorage = (key, fallback) => {
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  } catch (error) {
+    return fallback;
+  }
+};
+const writeStorage = (key, value) => {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch (error) {}
+};
+let products = readStorage(STORAGE_KEYS.products, defaultProducts);
+if (!products || !products.length) products = defaultProducts;
+let cart = readStorage(STORAGE_KEYS.cart, []);
+
+function formatCurrency(value) {
+  return new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR'}).format(value);
+}
+
+function updateCartCount() {
+  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  document.getElementById('count').textContent = count;
+}
+
+function render() {
+  document.getElementById('productGrid').innerHTML = products.map((p, i) => `
+    <div class="product">
+      <div class="product-img">${p.tag}</div>
+      <div class="product-body">
+        <h3>${p.name}</h3>
+        <div class="price">${formatCurrency(p.price)}</div>
+        <div class="muted">Sizes: S • M • L • XL</div>
+        <button class="btn" type="button" onclick="add(${i})">Add to Cart</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function saveCart() {
+  writeStorage(STORAGE_KEYS.cart, cart);
+  updateCartCount();
+}
+
+function add(index) {
+  const product = products[index];
+  const existingItem = cart.find((item) => item.name === product.name);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+  saveCart();
+  openCart();
+}
+
+function changeQuantity(name, delta) {
+  const item = cart.find((entry) => entry.name === name);
+  if (!item) return;
+  item.quantity += delta;
+  if (item.quantity <= 0) {
+    cart = cart.filter((entry) => entry.name !== name);
+  }
+  saveCart();
+  openCart();
+}
+
+function removeFromCart(name) {
+  cart = cart.filter((entry) => entry.name !== name);
+  saveCart();
+  openCart();
+}
+
+function openCart() {
+  const modal = document.getElementById('cartModal');
+  modal.classList.add('open');
+
+  const itemsContainer = document.getElementById('cartItems');
+  if (!cart.length) {
+    itemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+    document.getElementById('total').textContent = formatCurrency(0);
+    return;
+  }
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  itemsContainer.innerHTML = cart.map((item) => `
+    <div class="row small">
+      <span>${item.name}</span>
+      <div class="qty">
+        <button type="button" onclick="changeQuantity('${item.name.replace(/'/g, "\\'")}', -1)">-</button>
+        <span>${item.quantity}</span>
+        <button type="button" onclick="changeQuantity('${item.name.replace(/'/g, "\\'")}', 1)">+</button>
+        <button type="button" onclick="removeFromCart('${item.name.replace(/'/g, "\\'")}' )">Remove</button>
+      </div>
+      <b>${formatCurrency(item.price * item.quantity)}</b>
+    </div>
+  `).join('');
+  document.getElementById('total').textContent = formatCurrency(total);
+}
+
+function closeCart() {
+  document.getElementById('cartModal').classList.remove('open');
+}
+
+function checkout() {
+  if (!cart.length) {
+    alert('Your cart is empty.');
+    return;
+  }
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  alert(`COD checkout demo: your order total is ${formatCurrency(total)} and is ready for delivery confirmation.`);
+  cart = [];
+  saveCart();
+  closeCart();
+}
+
 render();
+updateCartCount();
+writeStorage(STORAGE_KEYS.products, products);
 </script>
 </body></html>

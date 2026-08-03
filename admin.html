@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAYÉRA Admin</title>
+<style>
+:root { --ink:#171515; --cream:#f8f3ed; --sand:#e7d8ca; --muted:#756b65; --white:#fff; --line:#eadfd7; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; background: var(--cream); color: var(--ink); }
+header { background: rgba(248,243,237,.96); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+.nav { max-width: 1100px; margin: 0 auto; padding: 18px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.logo { font-family: Georgia, serif; font-size: 28px; font-weight:700; letter-spacing: 0.5px; }
+.logo small { display:block; font: 10px Arial; letter-spacing: 3px; color: var(--muted); }
+.nav a { color: var(--ink); text-decoration: none; }
+main { max-width: 1100px; margin: 0 auto; padding: 48px 24px 80px; }
+.panel { background: white; border:1px solid var(--line); padding: 28px; }
+.grid { display:grid; grid-template-columns: 1fr 1.2fr; gap: 24px; }
+label { display:block; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+input, select { width:100%; padding: 12px 14px; margin-bottom: 18px; border:1px solid #d8cac1; font: inherit; }
+button { padding: 12px 16px; cursor: pointer; border: 0; font: inherit; }
+.btn-primary { background: var(--ink); color: white; }
+.btn-secondary { background: #fff; color: var(--ink); border:1px solid var(--ink); }
+.list { display:grid; gap: 12px; }
+.item { border:1px solid var(--line); background: var(--white); padding: 16px; display:flex; justify-content:space-between; gap:16px; align-items:center; }
+.item h3 { margin:0 0 8px; font-family: Georgia, serif; }
+.item p { margin:0; color: var(--muted); }
+.actions { display:flex; gap:10px; }
+.empty { color: var(--muted); padding: 16px 0; }
+@media(max-width: 760px){ .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="logo">RAYÉRA<small>ADMIN</small></div>
+    <a href="index.html">← Back to Store</a>
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+    <section class="panel">
+      <h2 style="margin-top:0; font-family:Georgia, serif;">Add or edit a product</h2>
+      <form id="productForm">
+        <input type="hidden" id="productIndex" value="">
+        <label for="name">Product name</label>
+        <input id="name" required placeholder="e.g. Evening Elegance Dress">
+
+        <label for="price">Price (€)</label>
+        <input id="price" type="number" min="0" step="0.01" required placeholder="59.99">
+
+        <label for="tag">Tag</label>
+        <select id="tag">
+          <option>NOUVEAU</option>
+          <option>BEST-SELLER</option>
+          <option>PREMIUM</option>
+          <option>LIMITED</option>
+        </select>
+
+        <button class="btn-primary" type="submit">Save product</button>
+        <button class="btn-secondary" type="button" id="resetForm" style="margin-left:8px;">Reset</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2 style="margin-top:0; font-family:Georgia, serif;">Current products</h2>
+      <div id="productList" class="list"></div>
+    </section>
+  </div>
+</main>
+
+<script>
+const STORAGE_KEY = 'rayera_products';
+const defaultProducts = [
+  { name: '🇵🇰 Elegant Shalwar Kameez', price: 59.99, tag: 'NOUVEAU' },
+  { name: '🇵🇰 Autumn Maxi Suit', price: 49.99, tag: 'NOUVEAU' },
+  { name: '🇵🇰 Classic Party Dress', price: 69.99, tag: 'BEST-SELLER' },
+  { name: '🇵🇰 Premium Formal Dress', price: 89.99, tag: 'PREMIUM' }
+];
+
+const readProducts = () => {
+  try {
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return stored && stored.length ? stored : defaultProducts;
+  } catch (error) {
+    return defaultProducts;
+  }
+};
+
+const writeProducts = (items) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+};
+
+const form = document.getElementById('productForm');
+const nameInput = document.getElementById('name');
+const priceInput = document.getElementById('price');
+const tagInput = document.getElementById('tag');
+const productIndexInput = document.getElementById('productIndex');
+const productList = document.getElementById('productList');
+
+function formatPrice(value) {
+  return new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR' }).format(value);
+}
+
+function renderProducts() {
+  const items = readProducts();
+  if (!items.length) {
+    productList.innerHTML = '<div class="empty">No products saved yet.</div>';
+    return;
+  }
+
+  productList.innerHTML = items.map((item, index) => `
+    <div class="item">
+      <div>
+        <h3>${item.name}</h3>
+        <p>${item.tag} • ${formatPrice(item.price)}</p>
+      </div>
+      <div class="actions">
+        <button class="btn-secondary" type="button" data-edit="${index}">Edit</button>
+        <button class="btn-primary" type="button" data-delete="${index}">Delete</button>
+      </div>
+    </div>
+  `).join('');
+
+  productList.querySelectorAll('[data-edit]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const items = readProducts();
+      const product = items[Number(button.dataset.edit)];
+      productIndexInput.value = button.dataset.edit;
+      nameInput.value = product.name;
+      priceInput.value = product.price;
+      tagInput.value = product.tag;
+      nameInput.focus();
+    });
+  });
+
+  productList.querySelectorAll('[data-delete]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const items = readProducts();
+      const index = Number(button.dataset.delete);
+      items.splice(index, 1);
+      writeProducts(items);
+      renderProducts();
+    });
+  });
+}
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const items = readProducts();
+  const payload = {
+    name: nameInput.value.trim(),
+    price: Number(priceInput.value),
+    tag: tagInput.value
+  };
+
+  if (!payload.name || !payload.price) {
+    return;
+  }
+
+  const index = productIndexInput.value;
+  if (index !== '') {
+    items[Number(index)] = payload;
+  } else {
+    items.push(payload);
+  }
+
+  writeProducts(items);
+  form.reset();
+  productIndexInput.value = '';
+  renderProducts();
+});
+
+document.getElementById('resetForm').addEventListener('click', () => {
+  form.reset();
+  productIndexInput.value = '';
+});
+
+renderProducts();
+</script>
+</body>
+</html>
